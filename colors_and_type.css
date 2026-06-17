@@ -1,0 +1,253 @@
+/* ===========================================================================
+   CMDX Design System — Foundations
+   Campus Management DX, The University of Tokyo
+   ---------------------------------------------------------------------------
+   Strict mono palette · pure white ground · thin editorial serif · neutral grotesque
+   =========================================================================== */
+
+/* --- Fonts -----------------------------------------------------------------
+   Two families, assigned by role:
+     · --font-sans  (Noto Sans JP) — UI chrome and short structural text:
+       navigation, headings, buttons, labels, eyebrows, table headers,
+       captions, news / publication / project list rows, metadata.
+     · --font-serif (Noto Serif JP) — long-form editorial body: the
+       .prose container, research essay paragraphs, future article /
+       publication abstract bodies. Opt-in per container — paragraphs
+       outside a .prose / .research-essay__p style remain Gothic.
+
+   Both families are self-hosted via @fontsource-variable as variable
+   builds with the wght axis. --font-sans uses weights 300 / 400 / 500;
+   --font-serif uses 400 for body (Mincho strokes are thin by nature, so
+   the 300 used in Sans body would be too pale even though the variable
+   axis allows it).
+
+   Apps must import the fontsource packages separately, e.g. in their
+   global stylesheet:
+       @import "@fontsource-variable/noto-sans-jp";
+       @import "@fontsource-variable/noto-serif-jp";
+   --------------------------------------------------------------------------- */
+
+:root {
+  /* ---- Color · pure white + ink (strict monochrome) -------------------- */
+  --paper:        #FFFFFF;   /* primary background — pure white */
+  --paper-2:      #F5F5F5;   /* sunk panels, hover surfaces — a hair off white */
+  --paper-3:      #E8E8E8;   /* wells, deep sunk surfaces */
+  --white:        #FFFFFF;   /* alias — cards sit on paper, differentiated by hairline */
+
+  --ink:          #0A0A0A;   /* primary text — near-black on pure white */
+  --ink-2:        #424242;   /* secondary text */
+  --ink-3:        #767676;   /* tertiary text, metadata */
+  --ink-4:        #B0B0B0;   /* placeholder, disabled */
+
+  --line:         #DCDCDC;   /* 1px hairline rules */
+  --line-soft:    #EBEBEB;   /* softer hairline */
+  --line-strong:  #0A0A0A;   /* editorial heavy rule */
+
+  /* ---- Semantic (use sparingly — system stays mono) -------------------- */
+  --fg-1:         var(--ink);
+  --fg-2:         var(--ink-2);
+  --fg-3:         var(--ink-3);
+  --fg-on-ink:    var(--paper);
+
+  --bg:           var(--paper);
+  --bg-2:         var(--paper-2);
+  --surface:      var(--white);
+  --surface-ink:  var(--ink);   /* inverted surface */
+
+  /* Single restrained accent — used only for editorial emphasis / errors.
+     Keep at <2% of any composition. */
+  --vermilion:    #B83A1E;
+  --vermilion-2: #8E2A12;
+
+  /* ---- Type families ---------------------------------------------------
+     Two families, assigned by role (see comment block above). --font-mono
+     stays aliased to sans — numeric/technical sequences rely on the sans
+     family's tabular-nums OpenType feature rather than a separate mono
+     family. */
+  --font-sans:    "Noto Sans JP Variable", "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", system-ui, sans-serif;
+  --font-serif:   "Noto Serif JP Variable", "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "MS Mincho", serif;
+  --font-mono:    var(--font-sans);   /* alias — technical role; rely on tabular-nums */
+
+  /* ---- Type scale · editorial, generous --------------------------------
+     Designed for Japanese mincho headlines — slightly larger than Latin to
+     give kanji breathing room. Line-height conservative on display, open
+     on body. Tracking negative on display, neutral on body. */
+
+  --fs-display-1: clamp(64px, 9vw, 140px);
+  --fs-display-2: clamp(48px, 6vw, 88px);
+  --fs-h1:        clamp(36px, 4vw, 56px);
+  --fs-h2:        clamp(28px, 3vw, 40px);
+  --fs-h3:        22px;
+  --fs-h4:        18px;
+  --fs-body:      16px;
+  --fs-body-sm:   14px;
+  --fs-meta:      12px;
+  --fs-micro:     10.5px;
+
+  --lh-display:   1.05;
+  --lh-h:         1.25;
+  --lh-body:      1.75;     /* generous for JA reading */
+  --lh-tight:     1.4;
+
+  --tracking-display: -0.03em;    /* tighter — compensates for sans display */
+  --tracking-h:       -0.015em;
+  --tracking-body:    0em;
+  --tracking-meta:    0.08em;     /* labels — wider since no serif tension */
+  --tracking-mono:    0.04em;     /* fake-mono spacing on technical labels */
+
+  /* ---- Spacing — 4px base, editorial generous -------------------------- */
+  --s-0:   0;
+  --s-1:   4px;
+  --s-2:   8px;
+  --s-3:   12px;
+  --s-4:   16px;
+  --s-5:   20px;
+  --s-6:   24px;
+  --s-8:   32px;
+  --s-10:  40px;
+  --s-12:  48px;
+  --s-16:  64px;
+  --s-20:  80px;
+  --s-24:  96px;
+  --s-32:  128px;
+  --s-40:  160px;
+
+  /* ---- Radii — minimal. Architecture is square. ------------------------ */
+  --r-0:   0px;
+  --r-1:   2px;
+  --r-2:   4px;
+  --r-pill: 999px;     /* used rarely, only for tag chips */
+
+  /* ---- Borders --------------------------------------------------------- */
+  --bw-hair:  0.5px;
+  --bw-1:     1px;
+  --bw-2:     2px;
+  --bw-rule:  1.5px;   /* editorial rule between sections */
+
+  /* ---- Elevation — almost none. Paper does not float. ------------------
+     Reserve shadows for true overlays (menus, popovers). */
+  --shadow-0: none;
+  --shadow-1: 0 1px 0 rgba(0,0,0,0.06);
+  --shadow-2: 0 8px 24px -12px rgba(0,0,0,0.18);
+  --shadow-3: 0 24px 60px -24px rgba(0,0,0,0.28);
+
+  /* ---- Motion — restrained, mostly opacity. No bounces. ---------------- */
+  --ease:        cubic-bezier(0.2, 0.0, 0.0, 1.0);
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast:    140ms;
+  --dur-base:    220ms;
+  --dur-slow:    400ms;
+
+  /* ---- Grid — editorial 12-col w/ wide gutters ------------------------- */
+  --grid-max:    1440px;
+  --grid-gutter: 32px;
+  --grid-cols:   12;
+}
+
+/* --- Element resets / canonical styles ------------------------------------ */
+html, body {
+  background: var(--bg);
+  color: var(--fg-1);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  font-feature-settings: "palt" 1, "kern" 1;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Display & headings — sans, thin weights for editorial restraint */
+.display-1,
+.display-2,
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-sans);
+  color: var(--fg-1);
+}
+
+.display-1 { font-size: var(--fs-display-1); line-height: var(--lh-display); font-weight: 500; letter-spacing: var(--tracking-display); }
+.display-2 { font-size: var(--fs-display-2); line-height: var(--lh-display); font-weight: 500; letter-spacing: var(--tracking-display); }
+
+h1 { font-size: var(--fs-h1); line-height: var(--lh-h); font-weight: 400; letter-spacing: var(--tracking-h); }
+h2 { font-size: var(--fs-h2); line-height: var(--lh-h); font-weight: 400; letter-spacing: var(--tracking-h); }
+h3 { font-size: var(--fs-h3); line-height: var(--lh-h); font-weight: 400; letter-spacing: var(--tracking-h); }
+h4 { font-size: var(--fs-h4); line-height: var(--lh-tight); font-weight: 400; letter-spacing: var(--tracking-h); }
+h5 { font-size: var(--fs-body); line-height: var(--lh-tight); font-weight: 400; letter-spacing: var(--tracking-h); }
+h6 { font-size: var(--fs-body-sm); line-height: var(--lh-tight); font-weight: 400; letter-spacing: var(--tracking-h); }
+p, li {
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--fg-1);
+  font-weight: 300;
+  text-wrap: pretty;
+}
+
+/* Editorial small-caps label — for section markers, eyebrows, metadata */
+.label, .eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--fs-meta);
+  font-weight: 300;
+  letter-spacing: var(--tracking-meta);
+  text-transform: uppercase;
+  color: var(--fg-2);
+}
+
+/* Numeric / technical — same family, but with tabular-nums + wider tracking */
+.mono, code, kbd, samp {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  letter-spacing: var(--tracking-mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Editorial body — used in long-form research text.
+   Mincho per the dual-family rule: this container is the canonical
+   opt-in to serif. Weight 400 since system Mincho fonts typically ship
+   only W3/W6 — 300 would silently render as 400 on most platforms.
+
+   .prose p / .prose li repeat the family + weight on the child element
+   because the global `p, li { font-family: var(--font-sans); ... }`
+   reset (below) would otherwise win on specificity (same 0,0,1 but
+   later in source). */
+.prose {
+  font-family: var(--font-serif);
+  font-size: var(--fs-body);
+  font-weight: 400;
+  line-height: var(--lh-body);
+  max-width: 62ch;
+  color: var(--fg-1);
+}
+.prose p,
+.prose li {
+  font-family: var(--font-serif);
+  font-weight: 400;
+}
+.prose p + p { margin-top: 1em; }
+
+/* Hairline rule — the editorial workhorse */
+hr, .rule {
+  border: 0;
+  border-top: var(--bw-1) solid var(--line);
+  margin: var(--s-12) 0;
+}
+.rule-strong {
+  border-top: var(--bw-rule) solid var(--line-strong);
+}
+
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 0.5px;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--line);
+  transition: text-decoration-color var(--dur-base) var(--ease);
+}
+a:hover {
+  text-decoration-color: var(--ink);
+}
+
+::selection {
+  background: var(--ink);
+  color: var(--paper);
+}
